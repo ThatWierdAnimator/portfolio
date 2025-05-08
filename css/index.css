@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+* {
+    font-family: 'Poppins', sans-serif
+}
+
+body {
+    overflow: hidden;
+    margin: 0;
+}
+
+h2 {
+    margin-top: 0;
+}
+
+#canvas {
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    z-index: 1;
+}
+
+main {
+    display: flex;
+    justify-content: space-evenly;
+    transform: translateY(15vh);
+    width: 5725px;
+    position: absolute;
+
+    padding-left: 350px;
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 400px;
+    text-align: center;
+}
+
+section h2 {
+    font-size: 3em;
+}
+
+section img {
+    width: 400px;
+    height: 400px;
+    border: 3px solid black
+}
+
+section p {
+    margin-top: 40px;
+}
+
+.instructions {
+    position: relative;
+    top: 500px;
+    width: 750px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.instructions img {
+    position: relative;
+    left: 25px;
+    width: 150px;
+    height: 150px;
+    border: 3px solid black;
+}
+
+.welcome p {
+    text-align: left;
+}
+
+.gallery {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 2000px;
+}

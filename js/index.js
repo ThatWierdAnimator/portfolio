@@ -13,13 +13,13 @@ const camera = {
     rightBorder: 0.8,
     leftBorder: 0.2,
     x: 0,
-    rightBound: 3000,
-    leftBound: -100
+    rightBound: 5000,
+    leftBound: -1000
 }
 
 // collision objects
-const blocks = [{ origX: camera.rightBound - 25, y: 0, width: 50, height: canvas.height }, { origX: camera.leftBound, y: 0, width: 50, height: canvas.height }];
-const linkPos = []
+const blocks = [{ origX: camera.rightBound - 25, y: 0, width: 50, height: canvas.height }, { origX: camera.leftBound, y: 0, width: 50, height: canvas.height }, { origX: camera.leftBound, y: canvas.height - 50, width: camera.rightBound - camera.leftBound, height: 50 }, { origX: camera.leftBound, y: 0, width: 1750, height: 50 }, { origX: camera.leftBound + 2275, y: 0, width: camera.rightBound - camera.leftBound - 2250, height: 50 }, { origX: camera.leftBound + 1775, y: -100, width: 500, height: 100 }];
+const linkPos = [{ origX: camera.leftBound + 950, y: canvas.height - 150, width: 75, height: 100, color: 'red' }, { origX: 2800, y: canvas.height - 150, width: 75, height: 100, color: 'red' }, { origX: 3610, y: canvas.height - 150, width: 75, height: 100, color: 'red' }, { origX: 4400, y: canvas.height - 150, width: 75, height: 100, color: 'red' }]
 
 // grab the links
 const links = document.getElementsByTagName('a');
@@ -31,7 +31,8 @@ const devTools = {
 
 // the player object
 const player = {
-    x: 700,
+    x: canvas.width / 2 - 25,
+    y: 0,
     width: 50,
     height: 50,
     color: 'blue',
@@ -223,11 +224,12 @@ function cameraLogic() {
     for (let link of linkPos) {
         link.x = link.origX - camera.x;
     }
+    main.style.left = `${(camera.x * -1) + camera.leftBound}px`;
 }
 
 document.addEventListener('keydown', (e) => {
     // check for jumping/flying
-    if (e.key === 'w') {
+    if (e.key === 'w' || e.key === 'W') {
         if (player.grounded) {
             player.velY -= player.jumpHeight;
             player.flying = true;
@@ -237,32 +239,32 @@ document.addEventListener('keydown', (e) => {
     }
 
     // check for moving right
-    if (e.key === 'd') {
+    if (e.key === 'd' || e.key === 'D') {
         player.movingRight = true;
     }
     // check for moving left
-    if (e.key === 'a') {
+    if (e.key === 'a' || e.key === 'A') {
         player.movingLeft = true;
     }
 
     // check for link enter
-    if (e.key === 'e' && player.hoveredLink) {
+    if ((e.key === 'e' || e.key === 'E') && player.hoveredLink) {
         window.location = player.hoveredLink;
     }
 })
 
 document.addEventListener('keyup', (e) => {
     // check for stop moving right
-    if (e.key === 'd') {
+    if (e.key === 'd' || e.key === 'D') {
         player.movingRight = false;
     }
     // check for stop moving left
-    if (e.key === 'a') {
+    if (e.key === 'a' || e.key === 'A') {
         player.movingLeft = false;
     }
 
     // check for stop flying
-    if (e.key === 'w') {
+    if (e.key === 'w' || e.key === 'W') {
         player.flying = false;
     }
 })

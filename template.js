@@ -219,6 +219,7 @@ function cameraLogic() {
     for (let link of linkPos) {
         link.x = link.origX - camera.x;
     }
+    main.style.left = `${(camera.x * -1) + camera.leftBound}px`;
 }
 
 document.addEventListener('keydown', (e) => {
