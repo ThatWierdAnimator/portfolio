@@ -4,15 +4,30 @@ const ctx = canvas.getContext('2d');
 // set the width and height to the window
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
+// grab main tag
+const main = document.getElementById('main');
 
-const blocks = [{ x: 500, y: 500, width: 500, height: 200 }]
+// the camera object
+// this is before the collision objects so we can add camera.width to them and stuff
+const camera = {
+    rightBorder: 0.8,
+    leftBorder: 0.2,
+    x: 0,
+    rightBound: 3000,
+    leftBound: -100
+}
 
+// grab the links
+const links = document.getElementsByTagName('a');
+
+// if we need debug tools, put an easy toggle here
 const devTools = {
-
+    devMode: false
 }
 
 // the player object
 const player = {
+    x: 700,
     width: 50,
     height: 50,
     color: 'blue',
@@ -105,6 +120,7 @@ function runPhysics(object) {
         player.grounded = false;
     }
 
+    // block collisions
     for (let block of blocks) {
         // collide with the top of blocks
         if (object.y + object.height > block.y &&
@@ -159,6 +175,50 @@ function runPhysics(object) {
             object.velX = 0;
         }
     }
+
+    // links collisions
+    for (let i in linkPos) {
+        // check if inside the link
+        if (object.x + object.width > linkPos[i].x &&
+            object.x < linkPos[i].x + linkPos[i].width &&
+            object.y + object.height > linkPos[i].y &&
+            object.y < linkPos[i].y + linkPos[i].height
+        ) {
+            player.hoveredLink = links[i].href;
+            // we break so that if we have two links we don't delete a link on accident
+            break;
+        } else {
+            delete player.hoveredLink;
+        }
+    }
+}
+
+function cameraLogic() {
+    // check when the camera should move right
+    if (player.x > canvas.width * camera.rightBorder && camera.x + canvas.width < camera.rightBound) {
+        // lock player character
+        player.x -= player.velX;
+
+        // move the screen
+        camera.x += player.velX;
+    }
+
+    // check when camera should move left
+    if (player.x < canvas.width * camera.leftBorder && camera.x > camera.leftBound) {
+        // lock player character
+        player.x -= player.velX;
+
+        // move the screen
+        camera.x += player.velX;
+    }
+
+    // move objects to camera
+    for (let block of blocks) {
+        block.x = block.origX - camera.x;
+    }
+    for (let link of linkPos) {
+        link.x = link.origX - camera.x;
+    }
 }
 
 document.addEventListener('keydown', (e) => {
@@ -179,6 +239,11 @@ document.addEventListener('keydown', (e) => {
     // check for moving left
     if (e.key === 'a') {
         player.movingLeft = true;
+    }
+
+    // check for link enter
+    if (e.key === 'e' && player.hoveredLink) {
+        window.location = player.hoveredLink;
     }
 })
 
@@ -204,11 +269,16 @@ function update() {
 
     // run the functions
     runPhysics(player);
-    render(player);
+    cameraLogic();
     // render every block
     for (let block of blocks) {
         render(block);
     }
+    for (let link of linkPos) {
+        render(link);
+    }
+    // we render player here so it's on top
+    render(player);
 
     // run the frame again
     requestAnimationFrame(update);
