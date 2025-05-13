@@ -18,8 +18,8 @@ const camera = {
 }
 
 // collision objects
-const blocks = [];
-const linkPos = [];
+const blocks = [{ origX: 0, y: canvas.height - 50, height: 50, width: canvas.width }, { origX: 0, y: 0, height: canvas.height, width: 50 }, { origX: 0, y: 0, height: 50, width: canvas.width }, { origX: canvas.width - 50, y: 0, height: canvas.height, width: 50 }, { origX: (canvas.width / 2) - 250, y: 300, width: 500, height: 50 }];
+const linkPos = [{ origX: canvas.width / 2 - 37.5, y: 200, width: 75, height: 100, color: 'red' }, { origX: 300, y: canvas.height - 150, width: 75, height: 100, color: 'red' }, { origX: canvas.width / 2 - 37.5, y: canvas.height - 150, width: 75, height: 100, color: 'red' }, { origX: canvas.width - 375, y: canvas.height - 150, width: 75, height: 100, color: 'red' }];
 
 // grab the links
 const links = document.getElementsByTagName('a');

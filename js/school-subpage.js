@@ -13,13 +13,16 @@ const camera = {
     rightBorder: 0.8,
     leftBorder: 0.2,
     x: 0,
-    rightBound: canvas.width,
+    rightBound: 3000,
     leftBound: 0
 }
 
+camera.width = camera.rightBound - camera.leftBound;
+camera.height = canvas.height;
+
 // collision objects
-const blocks = [];
-const linkPos = [];
+const blocks = [{ origX: 0, y: canvas.height - 50, height: 50, width: camera.width }, { origX: 0, y: 0, height: canvas.height, width: 50 }, { origX: 0, y: 0, height: 50, width: camera.width }, { origX: camera.width - 50, y: 0, height: canvas.height, width: 60 }];
+const linkPos = [{origX: 300, y: canvas.height - 150, height: 100, width: 75, color: 'red'}, {origX: 875, y: canvas.height - 150, height: 100, width: 75, color: 'red'}, {origX: 1395, y: canvas.height - 150, height: 100, width: 75, color: 'red'}, {origX: 1900, y: canvas.height - 150, height: 100, width: 75, color: 'red'}, {origX: 2405, y: canvas.height - 150, height: 100, width: 75, color: 'red'}, ];
 
 // grab the links
 const links = document.getElementsByTagName('a');
@@ -31,8 +34,8 @@ const devTools = {
 
 // the player object
 const player = {
-    x: canvas.width / 2 - 25,
-    y: 250,
+    x: 312.5,
+    y: camera.height - 100,
     width: 50,
     height: 50,
     color: 'blue',
